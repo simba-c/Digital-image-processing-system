@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="shortcut icon" href="../static/favicon.ico" type="image/x-icon">
+  <style>
+
+  </style>
+</head>
+
+<body>
+
+  <div id="box" style="position: relative; width: 1000px; height: 1000px; border: 1px solid #000; overflow: hidden;">
+    <div id="ball" style="width: 10px; height: 10px; border-radius: 5px; background-color: red; position: absolute; transition: all 1s;">
+    </div>
+  </div>
+
+  <script src="../static/js/jquery-3.2.1.js"></script>
+  <script>
+    let ballMove = function (ball, v) {
+      //初始位置随机
+      let posX = Math.random() * (1000 - ball.offsetWidth);
+      let posY = Math.random() * (1000 - ball.offsetHeight);
+      ball.style.left = posX + 'px';
+      ball.style.top = posY + 'px';
+
+      let timer = null;
+      //初始y速度（y方向）
+      let dir = Math.random() > 0.5 ? 1 : -1;
+      let v_y = Math.random() * v * dir;    //以初速度v/s随机方向运动
+      let v_x = Math.sqrt(v * v - v_y * v_y) * dir;
+      timer = setInterval(function () {
+
+        //判断小球是否碰到框的水平边缘，碰到了则水平速度反向
+        if (posX < 0 || posX > 990) {
+          v_x = -v_x;
+        }
+        //判断小球是否碰到框的垂直边缘，碰到了则垂直速度反向
+        if (posY < 0 || posY > 990) {
+          v_y = -v_y;
+        }
+        posX = parseInt(ball.style.left) + v_x;
+        posY = parseInt(ball.style.top) + v_y;
+
+        ball.style.left = posX + 'px'
+        ball.style.top = posY + 'px';
+      }, 1000);
+    }
+
+
+    let ball = document.getElementById('ball');
+
+    ballMove(ball, 100);
+
+
+
+  </script>
+</body>
+
+</html>
